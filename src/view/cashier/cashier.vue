@@ -3,8 +3,11 @@
         <Header>header</Header>
         <Content class="content">
             <Table :columns="columns" :data="data">
-                <template slot-scope="{ row }" slot="orderInfo">
-                    <Button type="success" @click="orderInfo(row)">订单详情</Button>
+                <template slot-scope="{ row }" slot="price">
+                    ¥{{ row.price | parseMoney }}
+                </template>
+                <template slot-scope="{ row }" slot="total">
+                    ¥{{ getTotal(row) | parseMoney }}
                 </template>
             </Table>
         </Content>
@@ -20,37 +23,31 @@
             return {
                 columns: [
                     {
-                        title: '订单号',
-                        key: 'orderId',
+                        title: '商品名称',
+                        key: 'name',
                         align: 'center'
                     },
                     {
-                        title: '交易时间',
-                        key: 'createTime',
+                        title: '商品价格',
+                        slot: 'price',
                         align: 'center'
                     },
                     {
-                        title: '交易金额',
-                        key: 'total',
+                        title: '商品数量',
+                        key: 'amount',
                         align: 'center'
                     },
                     {
-                        title: '交易方式',
-                        key: 'payment',
-                        align: 'center'
-                    },
-                    {
-                        title: '订单详情',
-                        slot: 'orderInfo',
+                        title: '商品总价',
+                        slot: 'total',
                         align: 'center'
                     }
                 ],
                 data: [
                     {
-                        orderId: '2019082716230001',
-                        createTime: '2019-08-27 16:24:44',
-                        total: '199.2',
-                        payment: '微信'
+                        name: '旺仔牛奶',
+                        price: '3',
+                        amount: '3'
                     }
                 ],
                 goodsCode: ''
@@ -59,6 +56,11 @@
         methods: {
             orderInfo(data) {
                 console.log(data)
+            },
+            getTotal(data) {
+                const price = parseFloat(data.price)
+                const amount = parseInt(data.amount)
+                return price * amount
             }
         },
         mounted() {
