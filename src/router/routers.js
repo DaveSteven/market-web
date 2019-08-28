@@ -46,5 +46,32 @@ export default [
                 component: () => import('@/view/management/home')
             }
         ]
+    },
+    {
+        path: '/admin/goods',
+        name: 'adminGoods',
+        meta: {
+            title: '商品管理',
+            icon: 'md-archive'
+        },
+        component: Main,
+        children: [
+            {
+                path: '/admin/goods/category',
+                name: 'goodsCategory',
+                meta: {
+                  title: '商品分类'
+                },
+                component: () => import('@/view/management/category')
+            },
+            {
+                path: '/admin/goods/list',
+                name: 'goodsList',
+                meta: {
+                  title: '商品列表'
+                },
+                component: () => import('@/view/management/goods')
+            }
+        ]
     }
 ]
