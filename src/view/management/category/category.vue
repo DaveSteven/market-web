@@ -5,11 +5,11 @@
         </div>
         <Table :columns="columns" :data="data">
             <template slot-scope="{ row }" slot="action">
-                <Button type="success" class="mr5">编辑</Button>
-                <Button type="error">删除</Button>
+                <Button type="success" class="mr5" @click="handleEdit(row)">编辑</Button>
+                <Button type="error" @click="handleDelete(row)">删除</Button>
             </template>
         </Table>
-        <Modal v-model="modalVisible" title="添加分类" width="400">
+        <Modal v-model="modalVisible" :title="modalTitle" width="400">
             <Form ref="categoryForm" :model="categoryForm">
                 <FormItem prop="name" :rules="{required: true, trigger: 'blur', message: '请输入分类名称'}">
                     <Input placeholder="分类名称" v-model="categoryForm.name" />
@@ -17,13 +17,13 @@
             </Form>
             <div slot="footer">
                 <Button type="default" @click="cancel">取消</Button>
-                <Button type="primary" @click="addConfirm">确定</Button>
+                <Button type="primary" @click="confirm()">确定</Button>
             </div>
         </Modal>
     </Card>
 </template>
 <script>
-    import { addCategory } from '../../../api/category'
+    import { getCategoryList, addCategory, editCategory, deleteCategory } from '../../../api/category'
 
     export default {
         data() {
@@ -46,28 +46,74 @@
                 modalVisible: false,
                 categoryForm: {
                     name: ''
-                }
+                },
+                actionType: 'add'
             }
         },
+        computed: {
+          modalTitle() {
+              return this.actionType === 'add' ? '添加' : '编辑'
+          }
+        },
+        created() {
+          this.fetchData()
+        },
         methods: {
+            fetchData() {
+                getCategoryList().then(res => {
+                    this.data = res.data;
+                })
+            },
             handleAdd() {
-                this.modalVisible = true;
+                this.actionType = 'add'
+                this.modalVisible = true
             },
             cancel() {
-                this.modalVisible = false;
+                this.modalVisible = false
                 this.$refs.categoryForm.resetFields();
             },
-
-            addConfirm() {
+            confirm() {
                 this.$refs.categoryForm.validate((valid) => {
                     if (valid) {
-                        addCategory({
-                            ...this.categoryForm
-                        }).then(() => {
-                            this.$Message.success('添加成功！');
-                            this.cancel();
-                        })
+                        if (this.actionType === 'add') {
+                            this.addCategory();
+                        } else if (this.actionType === 'edit') {
+                            this.editCategory();
+                        }
                     }
+                })
+            },
+            addCategory() {
+                addCategory({
+                    ...this.categoryForm
+                }).then(() => {
+                    this.$Message.success('添加成功！')
+                    this.fetchData()
+                    this.cancel()
+                })
+            },
+            editCategory() {
+                editCategory({
+                    id: this.currentCategory.id,
+                    ...this.categoryForm
+                }).then(() => {
+                    this.$Message.success('修改成功！')
+                    this.fetchData()
+                    this.cancel()
+                })
+            },
+            handleEdit(row) {
+                this.actionType = 'edit'
+                this.currentCategory = row;
+                this.categoryForm.name = row.name
+                this.modalVisible = true
+            },
+            handleDelete(row) {
+                deleteCategory({
+                    id: row.id
+                }).then(() => {
+                    this.$Message.success('删除成功！')
+                    this.fetchData()
                 })
             }
         }
