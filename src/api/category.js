@@ -3,7 +3,7 @@ import axios from '@/libs/api.request'
 // 获取分类
 export const getCategoryList = () => {
     return axios.request({
-        url: '/category/list',
+        url: '/category/getList',
         method: 'post'
     })
 }

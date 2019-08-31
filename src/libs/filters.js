@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { parseMoney } from './util'
+import { parseMoney, getSerialNumber } from './util'
 
 Vue.filter('parseMoney', parseMoney)
-
+Vue.filter('getSerialNumber', getSerialNumber)

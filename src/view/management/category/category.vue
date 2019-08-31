@@ -38,11 +38,7 @@
                         slot: 'action'
                     }
                 ],
-                data: [
-                    {
-                        name: '生活用品'
-                    }
-                ],
+                data: [],
                 modalVisible: false,
                 categoryForm: {
                     name: ''
@@ -66,6 +62,12 @@
             },
             handleAdd() {
                 this.actionType = 'add'
+                this.modalVisible = true
+            },
+            handleEdit(row) {
+                this.actionType = 'edit'
+                this.currentCategory = row;
+                this.categoryForm.name = row.name
                 this.modalVisible = true
             },
             cancel() {
@@ -102,18 +104,22 @@
                     this.cancel()
                 })
             },
-            handleEdit(row) {
-                this.actionType = 'edit'
-                this.currentCategory = row;
-                this.categoryForm.name = row.name
-                this.modalVisible = true
-            },
-            handleDelete(row) {
+            deleteCategory() {
                 deleteCategory({
-                    id: row.id
+                    id: this.currentCategory.id
                 }).then(() => {
                     this.$Message.success('删除成功！')
                     this.fetchData()
+                })
+            },
+            handleDelete(row) {
+                this.currentCategory = row;
+                this.$Modal.confirm({
+                    title: '系统提示',
+                    content: '确定要删除此分类吗？',
+                    onOk: () => {
+                        this.deleteCategory();
+                    }
                 })
             }
         }
