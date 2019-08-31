@@ -5,7 +5,7 @@ import router from './router'
 import store from './store'
 import config from '@/config'
 import 'iview/dist/styles/iview.css'
-import './assets/styles/index.less'
+import './common/styles/index.less'
 import './libs/filters'
 
 Vue.use(iView)
