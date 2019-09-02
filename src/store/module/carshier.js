@@ -1,4 +1,4 @@
-import { saveCartList, getCartList } from '../../common/js/catch'
+import { saveCartList, getCartList, removeCartList } from '../../common/js/catch'
 import deepClone from 'lodash.clonedeep'
 
 const types = {
@@ -17,12 +17,22 @@ function findIndex (list, goods) {
     })
 }
 
+function getTotal (list) {
+    let total = 0;
+    list.forEach(item => {
+        total += item.price * item.amount
+    })
+    return total.toFixed(2)
+}
+
 export default {
     state: {
-        cartList: getCartList()
+        cartList: getCartList(),
+        totalPrice: 0
     },
     getters: {
-        cartList: (state) => state.cartList
+        cartList: (state) => state.cartList,
+        totalPrice: (state) => getTotal(state.cartList)
     },
     mutations: {
         [types.SET_CART_LIST] (state, list) {
@@ -40,6 +50,10 @@ export default {
             }
             commit(types.SET_CART_LIST, cartList)
             saveCartList(cartList)
+        },
+        clearCart: ({ commit }) => {
+            commit(types.SET_CART_LIST, [])
+            removeCartList()
         }
     }
 }
