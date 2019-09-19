@@ -104,7 +104,7 @@
                 },
                 goodsFormValidate: {
                     typeId: [
-                        { required: true, message: '请选择商品分类', trigger: 'change', type: 'number' }
+                        { required: true, message: '请选择商品分类', trigger: 'change' }
                     ],
                     code: [
                         { required: true, message: '请输入商品编码', trigger: 'blur' }

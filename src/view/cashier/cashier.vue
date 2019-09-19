@@ -1,6 +1,6 @@
 <template>
     <Layout>
-        <Header>header</Header>
+        <Header>ff</Header>
         <Content class="content">
             <Table :columns="columns" :data="cartList">
                 <template slot-scope="{ row }" slot="price">

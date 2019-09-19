@@ -32,7 +32,6 @@ export default [
         redirect: '/admin/home',
         component: Main,
         meta: {
-            hideInMenu: true,
             notCache: true
         },
         children: [
@@ -71,6 +70,25 @@ export default [
                   title: '商品列表'
                 },
                 component: () => import('@/view/management/goods')
+            }
+        ]
+    },
+    {
+        path: '/admin/order',
+        name: 'adminOrder',
+        meta: {
+            title: '订单管理',
+            icon: 'ios-list-box'
+        },
+        component: Main,
+        children: [
+            {
+                path: '/admin/order/list',
+                name: 'orderList',
+                meta: {
+                    title: '订单列表'
+                },
+                component: () => import('@/view/management/order')
             }
         ]
     }
