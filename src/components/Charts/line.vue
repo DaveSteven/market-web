@@ -40,7 +40,7 @@
                     }
                 },
                 grid: {
-                    top: '3%',
+                    top: '15%',
                     left: '1.2%',
                     right: '1%',
                     bottom: '3%',
@@ -58,7 +58,7 @@
                         type: 'value'
                     }
                 ],
-                series: this.value.series
+                series: this.value.seriesData
             }
             this.$nextTick(() => {
                 this.dom = echarts.init(this.$refs.dom)

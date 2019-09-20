@@ -70,6 +70,14 @@ export default [
                   title: '商品列表'
                 },
                 component: () => import('@/view/management/goods')
+            },
+            {
+                path: '/admin/goods/stock',
+                name: 'goodsStock',
+                meta: {
+                    title: '商品库存'
+                },
+                component: () => import('@/view/management/stock')
             }
         ]
     },
@@ -89,6 +97,26 @@ export default [
                     title: '订单列表'
                 },
                 component: () => import('@/view/management/order')
+            }
+        ]
+    },
+    {
+        path: '/admin/supplier',
+        name: 'adminSupplier',
+        meta: {
+            title: '供应商管理',
+            icon: 'md-people'
+        },
+        component: Main,
+        children: [
+            {
+                path: '/admin/supplier/list',
+                name: 'supplierList',
+                meta: {
+                    title: '供应商列表',
+                    icon: 'md-people'
+                },
+                component: () => import('@/view/management/supplier')
             }
         ]
     }

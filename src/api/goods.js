@@ -26,9 +26,9 @@ export const getGoodsList = ({ start, limit }) => {
  * @param type_id 分类id
  * @returns {http.ClientRequest | ClientHttp2Stream | never | *}
  */
-export const addGoods = ({ code, name, costPrice, price, amount, typeId }) => {
+export const addGoods = ({ code, name, price, typeId }) => {
     const data = {
-        code, name, costPrice, price, amount, typeId
+        code, name, price, typeId
     }
     return axios.request({
         url: '/goods/add',
@@ -62,9 +62,9 @@ export const deleteGoods = ({ id }) => {
  * @param amount
  * @returns {http.ClientRequest | ClientHttp2Stream | never | *}
  */
-export const editGoods = ({ id, code, name, costPrice, price, amount, typeId }) => {
+export const editGoods = ({ id, code, name, price, typeId }) => {
     const data = {
-        id, code, name, costPrice, price, amount, typeId
+        id, code, name, price, typeId
     }
     return axios.request({
         url: '/goods/edit',

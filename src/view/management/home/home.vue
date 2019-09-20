@@ -15,16 +15,16 @@
             </Col>
         </Row>
         <Row>
-            <Col :md="24" :lg="8" :style="{marginBottom: '10px', padding: '10px'}">
+            <Col :style="{marginBottom: '10px', padding: '10px'}">
                 <Card>
-                    <ChartPie style="height: 300px;" :value="pieData" text="商品销售占比"></ChartPie>
+                    <ChartBar style="height: 300px;" :value="barData" text="每日销售情况"></ChartBar>
                 </Card>
             </Col>
         </Row>
         <Row>
             <Col :style="{marginBottom: '10px', padding: '10px'}">
                 <Card>
-                    <ChartLine style="height: 500px;" :value="lineData" :xAxisData="lineXAxisData" text="商品销售走势"></ChartLine>
+                    <ChartLine style="height: 500px;" :value="lineData" text="每日收入情况"></ChartLine>
                 </Card>
             </Col>
         </Row>
@@ -33,27 +33,46 @@
 <script>
     import InfoCard from '_c/InfoCard'
     import CountTo from '_c/CountTo'
-    import { ChartPie, ChartLine } from '_c/Charts'
+    import { ChartBar, ChartLine } from '_c/Charts'
 
     export default {
         components: {
             InfoCard,
             CountTo,
-            ChartPie,
+            ChartBar,
             ChartLine
         },
         data () {
             return {
-                pieData: [
-                    { value: 335, name: '南京' },
-                    { value: 310, name: '邮件营销' },
-                    { value: 234, name: '联盟广告' },
-                    { value: 135, name: '视频广告' },
-                    { value: 1548, name: '搜索引擎' }
-                ],
+                barData: {
+                    xAxisData: ['周一', '周二', '周三', '周四', '周五'],
+                    seriesData: [
+                        {
+                            name: 'Forest',
+                            type: 'bar',
+                            barGap: 0,
+                            data: [320, 332, 301, 334, 390]
+                        },
+                        {
+                            name: 'Steppe',
+                            type: 'bar',
+                            data: [220, 182, 191, 234, 290]
+                        },
+                        {
+                            name: 'Desert',
+                            type: 'bar',
+                            data: [150, 232, 201, 154, 190]
+                        },
+                        {
+                            name: 'Wetland',
+                            type: 'bar',
+                            data: [98, 77, 101, 99, 40]
+                        }
+                    ]
+                },
                 lineData: {
                     xAxisData: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
-                    series: [
+                    seriesData: [
                         {
                             name: '运营商/网络服务',
                             type: 'line',

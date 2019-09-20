@@ -7,14 +7,8 @@
             <template slot-scope="{ row, index }" slot="number">
                 {{ index | getSerialNumber(start, limit) }}
             </template>
-            <template slot-scope="{ row }" slot="costPrice">
-                ¥{{ row.costPrice | parseMoney }}
-            </template>
             <template slot-scope="{ row }" slot="price">
                 ¥{{ row.price | parseMoney }}
-            </template>
-            <template slot-scope="{ row }" slot="total">
-                ¥{{ row.costPrice * row.amount | parseMoney }}
             </template>
             <template slot-scope="{ row }" slot="action">
                 <Button type="success" class="mr5" @click="handleEdit(row)">编辑</Button>
@@ -34,14 +28,8 @@
                 <FormItem prop="name" label="商品名称">
                     <Input v-model="goodsForm.name" />
                 </FormItem>
-                <FormItem prop="costPrice" label="成本价">
-                    <Input v-model.number="goodsForm.costPrice" />
-                </FormItem>
-                <FormItem prop="price" label="商品价格">
+                <FormItem prop="price" label="商品售价">
                     <Input v-model.number="goodsForm.price" />
-                </FormItem>
-                <FormItem prop="amount" label="商品数量">
-                    <Input v-model.number="goodsForm.amount" />
                 </FormItem>
             </Form>
             <div slot="footer">
@@ -72,20 +60,8 @@
                         key: 'name'
                     },
                     {
-                        title: '成本价',
-                        slot: 'costPrice'
-                    },
-                    {
-                        title: '商品单价',
+                        title: '商品售价',
                         slot: 'price'
-                    },
-                    {
-                        title: '商品数量',
-                        key: 'amount'
-                    },
-                    {
-                        title: '商品总价',
-                        slot: 'total'
                     },
                     {
                         title: '操作',
@@ -98,9 +74,7 @@
                     typeId: '',
                     code: '',
                     name: '',
-                    price: '',
-                    costPrice: '',
-                    amount: ''
+                    price: ''
                 },
                 goodsFormValidate: {
                     typeId: [
@@ -114,12 +88,6 @@
                     ],
                     price: [
                         { required: true, message: '请输入商品价格', trigger: 'blur', type: 'number' }
-                    ],
-                    costPrice: [
-                        { required: true, message: '请输入商品价格', trigger: 'blur', type: 'number' }
-                    ],
-                    amount: [
-                        { required: true, message: '请输入商品数量', trigger: 'blur', type: 'number' }
                     ]
                 },
                 start: 1,
@@ -144,12 +112,12 @@
                     limit: this.limit
                 }).then(res => {
                     this.data = res.data.list;
-                    this.total = res.data.total;
+                    this.total = res.data.total
                 })
             },
             getCategoryList () {
                 getCategoryList().then(res => {
-                    this.categoryList = res.data;
+                    this.categoryList = res.data
                 })
             },
             cancel () {
@@ -165,7 +133,7 @@
             },
             handleEdit (row) {
                 this.actionType = 'edit'
-                this.goodsForm = Object.assign({}, row);
+                this.goodsForm = Object.assign({}, row)
                 this.currentGoods = row;
                 this.open()
             },
