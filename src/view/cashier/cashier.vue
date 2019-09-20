@@ -125,7 +125,11 @@
                     if (!this.modalVisible) {
                         this.modalVisible = true
                     }
-                    this.addCart({goods})
+                    this.addCart({
+                        goods: Object.assign(goods, {
+                            goodsId: goods.id
+                        })
+                    })
                     this.goods = this.findGoods(this.cartList, this.goodsCode)
                     this.goodsCode = ''
                 } else {
@@ -135,7 +139,11 @@
                         if (!this.modalVisible) {
                             this.modalVisible = true
                         }
-                        this.addCart({goods: res.data})
+                        this.addCart({
+                            goods: Object.assign(res.data, {
+                                goodsId: res.data.id
+                            })
+                        })
                         this.goods = this.findGoods(this.cartList, res.data.code)
                         this.goodsCode = ''
                     }).catch(() => {

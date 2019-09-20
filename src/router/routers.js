@@ -113,7 +113,7 @@ export default [
                 path: '/admin/supplier/list',
                 name: 'supplierList',
                 meta: {
-                    title: '供应商列表',
+                    title: '供应商管理',
                     icon: 'md-people'
                 },
                 component: () => import('@/view/management/supplier')

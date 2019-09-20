@@ -6,7 +6,7 @@ import axios from '@/libs/api.request'
  * @param limit
  * @returns {http.ClientRequest | ClientHttp2Stream | never | *}
  */
-export const getGoodsList = ({ start, limit }) => {
+export const getGoodsList = ({ start = 0, limit = 0 }) => {
     const data = {
         start, limit
     }

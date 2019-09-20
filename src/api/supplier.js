@@ -1,36 +1,38 @@
 import axios from '@/libs/api.request'
 
 /**
- * 商品入库
- * @param goodsId
- * @param channelId
- * @param amount
- * @param price
+ * 添加供应商
+ * @param name
+ * @param phone
  * @returns {ClientRequest | ClientHttp2Stream | never | *}
  */
-export const addStock = ({ goodsId, channelId, amount, price }) => {
-    const data = { goodsId, channelId, amount, price }
+export const addSupplier = ({ name, phone }) => {
+    const data = {
+        name,
+        phone
+    }
 
     return axios.request({
-        url: '/stock/add',
+        url: '/supplier/add',
         method: 'post',
         data
     })
 }
 
 /**
- * 获取库存
+ * 获取供应商列表
  * @param start
  * @param limit
  * @returns {ClientRequest | ClientHttp2Stream | never | *}
  */
-export const getStockList = ({ start = 0, limit = 0 }) => {
+export const getSupplierList = ({ start = 0, limit = 0 }) => {
     const data = {
-        start, limit
+        start,
+        limit
     }
 
     return axios.request({
-        url: '/stock/getList',
+        url: '/supplier/getList',
         method: 'post',
         data
     })
