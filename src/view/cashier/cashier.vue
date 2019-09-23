@@ -78,6 +78,11 @@
                         align: 'center'
                     },
                     {
+                        title: '商品编码',
+                        key: 'code',
+                        align: 'center'
+                    },
+                    {
                         title: '商品价格',
                         slot: 'price',
                         align: 'center'
@@ -120,36 +125,22 @@
                 if (!this.goodsCode) {
                     return
                 }
-                const goods = this.findGoods(this.cartList, this.goodsCode)
-                if  (goods) {
+                getGoodsByCode({
+                    code: this.goodsCode
+                }).then(res => {
                     if (!this.modalVisible) {
                         this.modalVisible = true
                     }
                     this.addCart({
-                        goods: Object.assign(goods, {
-                            goodsId: goods.id
+                        goods: Object.assign(res.data, {
+                            goodsId: res.data.id
                         })
                     })
-                    this.goods = this.findGoods(this.cartList, this.goodsCode)
+                    this.goods = this.findGoods(this.cartList, res.data.code)
                     this.goodsCode = ''
-                } else {
-                    getGoodsByCode({
-                        code: this.goodsCode
-                    }).then(res => {
-                        if (!this.modalVisible) {
-                            this.modalVisible = true
-                        }
-                        this.addCart({
-                            goods: Object.assign(res.data, {
-                                goodsId: res.data.id
-                            })
-                        })
-                        this.goods = this.findGoods(this.cartList, res.data.code)
-                        this.goodsCode = ''
-                    }).catch(() => {
-                        this.goodsCode = ''
-                    })
-                }
+                }).catch(() => {
+                    this.goodsCode = ''
+                })
             },
             keydownListener() {
                 document.onkeydown = (e) => {

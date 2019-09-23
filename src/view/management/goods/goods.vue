@@ -3,22 +3,26 @@
         <div class="text-right mb10">
             <Button type="primary" @click="handleAdd">添加商品</Button>
         </div>
-        <Table :columns="columns" :data="data">
+        <Table :columns="columns" :data="data" class="mb10">
             <template slot-scope="{ row, index }" slot="number">
                 {{ index | getSerialNumber(start, limit) }}
+            </template>
+            <template slot-scope="{ row }" slot="category">
+                <Tag color="green">{{ getCategory(row.categoryId) }}</Tag>
             </template>
             <template slot-scope="{ row }" slot="price">
                 ¥{{ row.price | parseMoney }}
             </template>
             <template slot-scope="{ row }" slot="action">
-                <Button type="success" class="mr5" @click="handleEdit(row)">编辑</Button>
-                <Button type="error" @click="handleDelete(row)">删除</Button>
+                <Button type="success" icon="ios-create-outline" class="mr5" @click="handleEdit(row)">编辑</Button>
+                <Button type="error" icon="ios-trash-outline" @click="handleDelete(row)">删除</Button>
             </template>
         </Table>
+        <Page :page-size="limit" :total="total" @on-change="toPage"></Page>
         <Modal v-model="modalVisible" :title="modalTitle" width="400">
             <Form ref="goodsForm" :rules="goodsFormValidate" :model="goodsForm" :label-width="80">
-                <FormItem prop="typeId" label="商品分类">
-                    <Select v-model="goodsForm.typeId" style="width: 150px">
+                <FormItem prop="categoryId" label="商品分类">
+                    <Select v-model="goodsForm.categoryId" style="width: 150px">
                         <Option v-for="(item, index) in categoryList" :key="index" :value="item.id">{{ item.name }}</Option>
                     </Select>
                 </FormItem>
@@ -52,16 +56,20 @@
                         slot: 'number'
                     },
                     {
-                        title: '商品编码',
-                        key: 'code'
-                    },
-                    {
                         title: '商品名称',
                         key: 'name'
                     },
                     {
+                        title: '商品分类',
+                        slot: 'category'
+                    },
+                    {
                         title: '商品售价',
                         slot: 'price'
+                    },
+                    {
+                        title: '商品编码',
+                        key: 'code'
                     },
                     {
                         title: '操作',
@@ -77,7 +85,7 @@
                     price: ''
                 },
                 goodsFormValidate: {
-                    typeId: [
+                    categoryId: [
                         { required: true, message: '请选择商品分类', trigger: 'change' }
                     ],
                     code: [
@@ -92,6 +100,7 @@
                 },
                 start: 1,
                 limit: 10,
+                total: 0,
                 modalVisible: false,
                 actionType: 'add'
             }
@@ -103,22 +112,17 @@
         },
         created () {
             this.fetchData();
-            this.getCategoryList();
         },
         methods: {
-            fetchData () {
-                getGoodsList({
+            async fetchData () {
+                const categoryListResult = await getCategoryList();
+                const goodsListResult = await getGoodsList({
                     start: (this.start - 1) * this.limit,
                     limit: this.limit
-                }).then(res => {
-                    this.data = res.data.list;
-                    this.total = res.data.total
                 })
-            },
-            getCategoryList () {
-                getCategoryList().then(res => {
-                    this.categoryList = res.data
-                })
+                this.categoryList = categoryListResult.data;
+                this.data = goodsListResult.data.list;
+                this.total = goodsListResult.data.total
             },
             cancel () {
                 this.modalVisible = false
@@ -184,6 +188,17 @@
                         }
                     }
                 })
+            },
+            getCategory(id) {
+                const category = this.categoryList.find(item => {
+                    return item.id === id;
+                })
+                return category.name;
+            },
+            toPage (page) {
+                console.log(page)
+                this.start = page;
+                this.fetchData();
             }
         }
     }

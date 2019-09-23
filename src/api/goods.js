@@ -62,9 +62,9 @@ export const deleteGoods = ({ id }) => {
  * @param amount
  * @returns {http.ClientRequest | ClientHttp2Stream | never | *}
  */
-export const editGoods = ({ id, code, name, price, typeId }) => {
+export const editGoods = ({ id, code, name, price, categoryId }) => {
     const data = {
-        id, code, name, price, typeId
+        id, code, name, price, categoryId
     }
     return axios.request({
         url: '/goods/edit',

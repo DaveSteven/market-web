@@ -5,8 +5,8 @@
         </div>
         <Table :columns="columns" :data="data">
             <template slot-scope="{ row }" slot="action">
-                <Button type="success" class="mr5" @click="handleEdit(row)">编辑</Button>
-                <Button type="error" @click="handleDelete(row)">删除</Button>
+                <Button type="success" icon="ios-create-outline" class="mr5" @click="handleEdit(row)">编辑</Button>
+                <Button type="error" icon="ios-trash-outline" @click="handleDelete(row)">删除</Button>
             </template>
         </Table>
         <Modal v-model="modalVisible" :title="modalTitle" width="400">
