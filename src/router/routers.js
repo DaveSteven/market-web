@@ -70,14 +70,33 @@ export default [
                   title: '商品列表'
                 },
                 component: () => import('@/view/management/goods')
-            },
+            }
+        ]
+    },
+    {
+        path: '/admin/stock',
+        name: 'admin/stock',
+        meta: {
+            title: '库存管理',
+            icon: 'md-filing'
+        },
+        component: Main,
+        children: [
             {
-                path: '/admin/goods/stock',
-                name: 'goodsStock',
+                path: '/admin/stock/list',
+                name: 'stockList',
                 meta: {
-                    title: '商品库存'
+                    title: '库存列表'
                 },
                 component: () => import('@/view/management/stock')
+            },
+            {
+                path: '/admin/inventory/list',
+                name: 'inventoryList',
+                meta: {
+                    title: '进货记录'
+                },
+                component: () => import('@/view/management/inventory')
             }
         ]
     },
