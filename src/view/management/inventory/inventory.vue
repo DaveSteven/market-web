@@ -10,6 +10,9 @@
             <template slot-scope="{ row }" slot="supplier">
                 {{ getSupplier(row.channelId) }}
             </template>
+            <template slot-scope="{ row }" slot="amount">
+                <Tag color="green">{{ row.amount }}</Tag>
+            </template>
             <template slot-scope="{ row }" slot="price">
                 ¥{{ row.price | parseMoney }}
             </template>
@@ -40,7 +43,7 @@
                     },
                     {
                         title: '数量',
-                        key: 'amount'
+                        slot: 'amount'
                     },
                     {
                         title: '价格',
