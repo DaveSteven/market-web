@@ -113,7 +113,8 @@ export default [
                 path: '/admin/order/list',
                 name: 'orderList',
                 meta: {
-                    title: '订单列表'
+                    title: '订单列表',
+                    icon: 'ios-list-box'
                 },
                 component: () => import('@/view/management/order')
             }

@@ -11,7 +11,7 @@
                 {{ getSupplier(row.channelId) }}
             </template>
             <template slot-scope="{ row }" slot="amount">
-                <Tag color="green">{{ row.amount }}</Tag>
+                <Tag color="green">+&nbsp;{{ row.amount }}</Tag>
             </template>
             <template slot-scope="{ row }" slot="price">
                 ¥{{ row.price | parseMoney }}

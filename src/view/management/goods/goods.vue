@@ -14,8 +14,8 @@
                 ¥{{ row.price | parseMoney }}
             </template>
             <template slot-scope="{ row }" slot="action">
-                <Button type="success" icon="ios-create-outline" class="mr5" @click="handleEdit(row)">编辑</Button>
-                <Button type="error" icon="ios-trash-outline" @click="handleDelete(row)">删除</Button>
+                <Button type="success" class="mr5" @click="handleEdit(row)">编辑</Button>
+                <Button type="error" @click="handleDelete(row)">删除</Button>
             </template>
         </Table>
         <Page :page-size="limit" :total="total" @on-change="toPage"></Page>
@@ -196,7 +196,6 @@
                 return category.name;
             },
             toPage (page) {
-                console.log(page)
                 this.start = page;
                 this.fetchData();
             }

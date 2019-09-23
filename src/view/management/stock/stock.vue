@@ -3,7 +3,7 @@
         <div class="text-right mb10">
             <Button type="primary" @click="handleAdd">进货</Button>
         </div>
-        <Table :columns="columns" :data="data">
+        <Table :columns="columns" :data="data" class="mb10">
             <template slot-scope="{ row, index }" slot="number">
                 {{ index | getSerialNumber(start, limit) }}
             </template>
@@ -11,9 +11,10 @@
                 {{ getGoods(row.goodsId) }}
             </template>
             <template slot-scope="{ row }" slot="action">
-                <Button type="success" icon="ios-add-circle" @click="addStock(row)">补货</Button>
+                <Button type="success" @click="addStock(row)">补货</Button>
             </template>
         </Table>
+        <Page :total="total" :page-size="limit" @on-change="toPage"></Page>
         <Modal v-model="stockModalVisible" title="进货" width="400" @on-cancel="cancel">
             <Form ref="stockForm" :model="stockForm" :rules="formValidate" :label-width="100">
                 <FormItem label="商品编码" prop="code">
@@ -120,6 +121,15 @@
                 this.data = stockResult.data.list
                 this.total = stockResult.data.total
             },
+            getStockList () {
+                getStockList({
+                    start: (this.start - 1) * this.limit,
+                    limit: this.limit
+                }).then(res => {
+                    this.data = res.data.list
+                    this.total = res.data.total
+                })
+            },
             handleAdd () {
                 this.open();
             },
@@ -165,6 +175,10 @@
                     return item.code === code
                 })
                 this.stockForm.goodsId = goods.id
+            },
+            toPage (page) {
+                this.start = page
+                this.getStockList()
             }
         }
     }

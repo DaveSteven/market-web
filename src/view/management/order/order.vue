@@ -1,6 +1,6 @@
 <template>
     <Card>
-        <Table :columns="columns" :data="data">
+        <Table :columns="columns" :data="data" class="mb10">
             <template slot-scope="{ row }" slot="total">
                 ¥{{ row.total | parseMoney }}
             </template>
@@ -11,6 +11,7 @@
                 <Button type="success" @click="getOrderDetail(row.id)">订单信息</Button>
             </template>
         </Table>
+        <Page :total="total" :page-size="limit" @on-change="toPage"></Page>
         <Modal v-model="orderVisible" title="订单详情" width="60%">
             <Table :columns="detailColumns" :data="orderDetail">
                 <template slot-scope="{ row }" slot="price">¥{{ row.price | parseMoney }}</template>
@@ -50,6 +51,7 @@
                 data: [],
                 start: 1,
                 limit: 10,
+                total: 0,
                 payment: {
                     0: {
                         name: '现金',
@@ -95,20 +97,24 @@
                     start: (this.start - 1) * this.limit,
                     limit: this.limit
                 }).then(res => {
-                    this.data = res.data.list;
-                    this.total = res.data.total;
+                    this.data = res.data.list
+                    this.total = res.data.total
                 })
             },
             getOrderDetail(orderId) {
                 getOrderInfo({
                     orderId
                 }).then(res => {
-                    this.orderDetail = res.data;
-                    this.orderVisible = true;
+                    this.orderDetail = res.data
+                    this.orderVisible = true
                 })
             },
             getTotal(data) {
-                return data.price * data.amount;
+                return data.price * data.amount
+            },
+            toPage (page) {
+                this.start = page
+                this.fetchData()
             }
         }
     }
