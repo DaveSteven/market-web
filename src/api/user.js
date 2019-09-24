@@ -6,7 +6,7 @@ export const login = ({ username, password }) => {
     password
   }
   return axios.request({
-    url: '/admin/login',
+    url: '/user/employee/login',
     data,
     method: 'post'
   })
@@ -14,7 +14,7 @@ export const login = ({ username, password }) => {
 
 export const getUserInfo = () => {
   return axios.request({
-    url: '/admin/getInfo',
+    url: '/user/getInfo',
     method: 'post'
   })
 }

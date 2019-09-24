@@ -6,9 +6,9 @@ import axios from '@/libs/api.request'
  * @param limit
  * @returns {http.ClientRequest | ClientHttp2Stream | never | *}
  */
-export const addOrder = ({ employeeId = 1, total, payment, cartList }) => {
+export const addOrder = ({ userId, total, payment, cartList }) => {
     const data = {
-        employeeId, total, payment, cartList
+        userId, total, payment, cartList
     }
     return axios.request({
         url: '/order/add',
