@@ -15,17 +15,8 @@ export default {
     baseUrl: {
         // dev: 'https://www.easy-mock.com/mock/5add9213ce4d0e69998a6f51/iview-admin/',
         dev: '',
-        pro: 'http://39.98.168.203:9997'
+        pro: 'http://47.100.12.81:9000'
     },
-    /**
-     * 七牛云空间地址
-     */
-    qiniuBucketUrl: 'http://images.shandongbojun.com/',
-    /**
-     * 七牛云上传地址
-     * 华南区
-     */
-    uploadAddress: 'https://upload-z2.qiniup.com',
     /**
      * @description 默认打开的首页的路由name值，默认为home
      */
