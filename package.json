@@ -25,6 +25,7 @@
     "lint-staged": "^9.2.4",
     "lodash.clonedeep": "^4.5.0",
     "lodash.debounce": "^4.0.8",
+    "pm2": "^3.5.1",
     "prettier": "^1.18.2",
     "vue": "^2.6.10",
     "vue-i18n": "^8.14.0",

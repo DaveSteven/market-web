@@ -135,6 +135,17 @@
                 return this.$store.state.user.userName
             }
         },
+        mounted() {
+            this.keydownListener()
+
+            const focus = () => {
+                this.timer = setTimeout(() => {
+                    this.$refs.goodsCode.focus()
+                    focus()
+                }, 300)
+            }
+            focus()
+        },
         methods: {
             getTotal (data) {
                 const price = parseFloat(data.price)
@@ -211,17 +222,6 @@
                 'clearCart',
                 'handleLogOut'
             ])
-        },
-        mounted() {
-            this.keydownListener();
-
-            const focus = () => {
-                this.timer = setTimeout(() => {
-                    this.$refs.goodsCode.focus()
-                    focus()
-                }, 300)
-            }
-            focus()
         }
     }
 </script>
