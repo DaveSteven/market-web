@@ -7,7 +7,9 @@
     "precommit": "lint-staged",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "setup": "pm2 deploy deploy.yaml production setup",
+    "deploy": "pm2 deploy deploy.yaml production upddate"
   },
   "dependencies": {
     "@commitlint/cli": "^8.1.0",
